@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import flowershop.dao.BillDAO;
 import flowershop.dao.BouquetDAO;
 import flowershop.dao.CustomerDAO;
+import flowershop.dao.DAOException;
 import flowershop.dao.DAOManager;
 import flowershop.dao.FlowerDAO;
 import flowershop.dao.LineDAO;
@@ -30,11 +31,11 @@ public class MySQLDAOManager implements DAOManager {
   private FlowerDAO flower = null;
 
   public MySQLDAOManager() throws SQLException {
-    conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+      conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
   }
   
   @Override
-  public CustomerDAO getClientDAO() {
+  public CustomerDAO getCustomerDAO() {
     if (client == null) {
       client = new MySQLCustomerDAO(conn);
     }

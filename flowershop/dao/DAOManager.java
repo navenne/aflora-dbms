@@ -1,7 +1,7 @@
 package flowershop.dao;
 
 public interface DAOManager {
-  CustomerDAO getClientDAO();
+  CustomerDAO getCustomerDAO();
   BillDAO getBillDAO();
   LineDAO getLineDAO();
   BouquetDAO getBouquetDAO();

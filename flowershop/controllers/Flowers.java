@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import flowershop.Customer;
+import flowershop.Flower;
 import flowershop.dao.DAOException;
 import flowershop.dao.DAOManager;
 import flowershop.dao.mysql.MySQLDAOManager;
@@ -56,24 +56,36 @@ public class Flowers implements Initializable {
   private TextField idInput;
 
   @FXML
-  private TextField nameInput;
+  private TextField speciesInput;
 
   @FXML
-  private TextField phoneNumberInput;
+  private TextField colorInput;
+  
+  @FXML
+  private TextField priceInput;
+  
+  @FXML
+  private TextField stockInput;
 
   @FXML
-  private TableView<Customer> table;
+  private TableView<Flower> table;
 
   @FXML
-  private TableColumn<Customer, Long> idCol;
+  private TableColumn<Flower, Long> idCol;
 
   @FXML
-  private TableColumn<Customer, String> nameCol;
+  private TableColumn<Flower, String> speciesCol;
 
   @FXML
-  private TableColumn<Customer, String> phoneNumberCol;
+  private TableColumn<Flower, String> colorCol;
+  
+  @FXML
+  private TableColumn<Flower, Float> priceCol;
+  
+  @FXML
+  private TableColumn<Flower, Integer> stockCol;
 
-  private ObservableList<Customer> obList = FXCollections.observableArrayList();
+  private ObservableList<Flower> obList = FXCollections.observableArrayList();
 
   private DAOManager manager;
 
@@ -88,10 +100,12 @@ public class Flowers implements Initializable {
   @FXML
   void onTableItemSelected(MouseEvent event) {
     try {
-      Customer customer = table.getSelectionModel().getSelectedItem();
-      idInput.setText(customer.getId().toString());
-      nameInput.setText(customer.getName());
-      phoneNumberInput.setText(customer.getPhoneNumber());
+      Flower flower = table.getSelectionModel().getSelectedItem();
+      idInput.setText(flower.getId().toString());
+      speciesInput.setText(flower.getSpecies());
+      colorInput.setText(flower.getColor());
+      priceInput.setText(String.valueOf(flower.getPrice()));
+      stockInput.setText(String.valueOf(flower.getStock()));
     } catch (NullPointerException e) {
     }
   }
@@ -100,14 +114,15 @@ public class Flowers implements Initializable {
   void onDeleteButton(ActionEvent event) {
     try {
       manager = new MySQLDAOManager();
-      manager.getCustomerDAO().delete(Long.parseLong(idInput.getText()));
+      manager.getFlowerDAO().delete(Long.parseLong(idInput.getText()));
       clear();
+      obList.clear();
       showTable();
 
     } catch (NumberFormatException e) {
       alert(AlertType.ERROR, "Invalid value", "Please enter a number.");
     } catch (DAOException e) {
-      alert(AlertType.ERROR, "Delete error", "Could not delete customer from database.");
+      alert(AlertType.ERROR, "Delete error", "Could not delete flower from database.");
     } catch (SQLException e) {
       alert(AlertType.ERROR, "Connection failed", "Could not stablish connection with database.");
     }
@@ -118,13 +133,15 @@ public class Flowers implements Initializable {
     try {
       manager = new MySQLDAOManager();
       if (idInput.getText() == "") {
-        manager.getCustomerDAO()
-            .insert(new Customer(nameInput.getText(), phoneNumberInput.getText()));
+        manager.getFlowerDAO()
+            .insert(new Flower(speciesInput.getText(), colorInput.getText(), Float.parseFloat(priceInput.getText()), Integer.parseInt(stockInput.getText())));
       } else {
-        Customer customer = table.getSelectionModel().getSelectedItem();
-        customer.setName(nameInput.getText());
-        customer.setPhoneNumber(phoneNumberInput.getText());
-        manager.getCustomerDAO().update(customer);
+        Flower flower = table.getSelectionModel().getSelectedItem();
+        flower.setSpecies(speciesInput.getText());
+        flower.setColor(colorInput.getText());
+        flower.setPrice(Float.parseFloat(priceInput.getText()));
+        flower.setStock(Integer.parseInt(stockInput.getText()));
+        manager.getFlowerDAO().update(flower);
       }
 
       obList.clear();
@@ -133,7 +150,7 @@ public class Flowers implements Initializable {
     } catch (NumberFormatException e) {
       alert(AlertType.ERROR, "Invalid value", "Please enter a number.");
     } catch (DAOException e) {
-      alert(AlertType.ERROR, "Error", "Could not save nor modify customer.");
+      alert(AlertType.ERROR, "Error", "Could not save nor modify flower.");
     } catch (SQLException e) {
       alert(AlertType.ERROR, "Connection failed", "Could not stablish connection with database.");
     }
@@ -143,20 +160,22 @@ public class Flowers implements Initializable {
   void onSearchButton(ActionEvent event) {
     try {
       manager = new MySQLDAOManager();
-      Customer customer = manager.getCustomerDAO().get(Long.parseLong(searchInput.getText()));
+      Flower flower = manager.getFlowerDAO().get(Long.parseLong(searchInput.getText()));
 
-      idInput.setText(customer.getId().toString());
-      nameInput.setText(customer.getName());
-      phoneNumberInput.setText(customer.getPhoneNumber());
+      idInput.setText(flower.getId().toString());
+      speciesInput.setText(flower.getSpecies());
+      colorInput.setText(flower.getColor());
+      priceInput.setText(String.valueOf(flower.getPrice()));
+      stockInput.setText(String.valueOf(flower.getStock()));
 
       obList.clear();
-      obList.add(customer);
+      obList.add(flower);
       table.setItems(obList);
 
     } catch (NumberFormatException e) {
       alert(AlertType.ERROR, "Invalid value", "Please enter a number.");
     } catch (DAOException e) {
-      alert(AlertType.ERROR, "Search error", "Could not find customer.");
+      alert(AlertType.ERROR, "Search error", "Could not find flower.");
     } catch (SQLException e) {
       alert(AlertType.ERROR, "Connection failed", "Could not stablish connection with database.");
     }
@@ -187,18 +206,20 @@ public class Flowers implements Initializable {
   private void showTable() {
     try {
       manager = new MySQLDAOManager();
-      for (Customer customer : manager.getCustomerDAO().getAll()) {
-        obList.add(customer);
+      for (Flower flower : manager.getFlowerDAO().getAll()) {
+        obList.add(flower);
       }
     } catch (DAOException e) {
-      alert(AlertType.ERROR, "Search error", "Could not find any customers.");
+      alert(AlertType.ERROR, "Search error", "Could not find any flowers.");
     } catch (SQLException e) {
       alert(AlertType.ERROR, "Connection failed", "Could not stablish connection with database.");
     }
 
     idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-    nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-    phoneNumberCol.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+    speciesCol.setCellValueFactory(new PropertyValueFactory<>("species"));
+    colorCol.setCellValueFactory(new PropertyValueFactory<>("color"));
+    priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+    stockCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
 
     table.setItems(obList);
   }
@@ -213,7 +234,9 @@ public class Flowers implements Initializable {
   private void clear() {
     searchInput.clear();
     idInput.clear();
-    nameInput.clear();
-    phoneNumberInput.clear();
+    speciesInput.clear();
+    colorInput.clear();
+    priceInput.clear();
+    stockInput.clear();
   }
 }

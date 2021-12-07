@@ -102,6 +102,7 @@ public class Customers implements Initializable {
       manager = new MySQLDAOManager();
       manager.getCustomerDAO().delete(Long.parseLong(idInput.getText()));
       clear();
+      obList.clear();
       showTable();
 
     } catch (NumberFormatException e) {

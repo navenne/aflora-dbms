@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import flowershop.dao.BillDAO;
 import flowershop.dao.BouquetDAO;
 import flowershop.dao.CustomerDAO;
-import flowershop.dao.DAOException;
 import flowershop.dao.DAOManager;
 import flowershop.dao.FlowerDAO;
 import flowershop.dao.LineDAO;

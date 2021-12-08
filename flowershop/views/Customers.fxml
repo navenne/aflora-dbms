@@ -87,11 +87,12 @@
       </TableView>
       <VBox prefHeight="231.0" prefWidth="163.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
          <children>
-            <Button fx:id="newButton" mnemonicParsing="false" onAction="#onBackToListButton" text="New Customer">
-               <VBox.margin>
-                  <Insets bottom="10.0" />
-               </VBox.margin>
-            </Button>
+            <HBox spacing="5.0">
+               <children>
+                  <Button fx:id="newButton" mnemonicParsing="false" onAction="#onBackToListButton" text="New Customer" />
+                  <Button fx:id="billButton" mnemonicParsing="false" onAction="#onBillButton" text="New Bill" />
+               </children>
+            </HBox>
             <Label text="ID" />
             <TextField fx:id="idInput" maxHeight="-Infinity" maxWidth="-Infinity" />
             <Label text="NAME" />

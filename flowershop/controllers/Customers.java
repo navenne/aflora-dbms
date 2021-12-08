@@ -42,6 +42,9 @@ public class Customers implements Initializable {
 
   @FXML
   private Button newButton;
+  
+  @FXML
+  private Button billButton;
 
   @FXML
   private Button deleteButton;
@@ -94,6 +97,11 @@ public class Customers implements Initializable {
       phoneNumberInput.setText(customer.getPhoneNumber());
     } catch (NullPointerException e) {
     }
+  }
+  
+  @FXML
+  void onBillButton(ActionEvent event) {
+    
   }
 
   @FXML

@@ -1,5 +1,6 @@
 package flowershop;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -12,9 +13,13 @@ public class Bouquet {
   private Long id = null;
   private Long lineId;
   private Map<Flower, Integer> flowers;
+  
 
-  public Bouquet(Long lineId) {
-    this.lineId = lineId;
+  /**
+   * 
+   */
+  public Bouquet() {
+    flowers = new HashMap<Flower, Integer>();
   }
 
   public Long getId() {

@@ -72,7 +72,7 @@ public class MySQLDAOManager implements DAOManager {
     }
     return flower;
   }
-  
-  
-
+  public Connection ver() {
+    return this.conn;
+  }
 }

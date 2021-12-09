@@ -1,6 +1,8 @@
 package flowershop.controllers;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * @author Laura Hidalgo Rivera
@@ -9,15 +11,13 @@ import java.io.IOException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
+import javafx.scene.control.Alert.AlertType;
 
-public class Menu {
+public class Menu implements Initializable {
 
     @FXML
     private Button billsButton;
@@ -33,59 +33,32 @@ public class Menu {
 
     @FXML
     private Label title;
+    
+    private Utils utils = new Utils();
 
-    @FXML
-    void viewBills(ActionEvent event) {
-      try {
-        switchScene("Bills", event);
-      } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
+    private Alert a = new Alert(null);
+    
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+      Utils.alert(a, AlertType.CONFIRMATION, "Database info", "Create clean database?");
     }
-
-    @FXML
-    void viewBouquetMaker(ActionEvent event) {
-      try {
-        switchScene("Bouquets", event);
-      } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-    }
-
+    
     @FXML
     void viewCustomers(ActionEvent event) {
       try {
-        switchScene("Customers", event);
+        utils.switchScene("Customers", event);
       } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
+        Utils.alert(a, AlertType.ERROR, "Scene error", "Scene could not be loaded.");
       }
     }
 
     @FXML
     void viewFlowers(ActionEvent event) {
       try {
-        switchScene("Flowers", event);
+        utils.switchScene("Flowers", event);
       } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
+        Utils.alert(a, AlertType.ERROR, "Scene error", "Scene could not be loaded.");
       }
-    }
-    
-    private void switchScene(String fxml, ActionEvent event) throws IOException {
-      Parent root = FXMLLoader.load(this.getClass().getResource("/flowershop/views/" + fxml + ".fxml"));
-      
-      Scene scene = new Scene(root);
-
-      Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-      
-      stage.setTitle("Flower Shop - " + fxml);
-      stage.setScene(scene);
-      stage.show();
-
-      stage.setResizable(false);
     }
 
 }

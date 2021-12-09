@@ -1,5 +1,6 @@
 package flowershop;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -10,12 +11,12 @@ import java.util.Date;
 public class Bill {
   private Long id = null;
   private Date date;
-  private float total;
+  private ArrayList<Line> lines;
   private Long customerId;
 
-  public Bill(Date date, float total, Long customerId) {
+  public Bill(Date date, Long customerId) {
     this.date = date;
-    this.total = total;
+    this.lines = new ArrayList<>();
     this.customerId = customerId;
   }
 
@@ -25,10 +26,6 @@ public class Bill {
 
   public Date getDate() {
     return date;
-  }
-
-  public float getTotal() {
-    return total;
   }
 
   public Long getCustomerId() {
@@ -43,17 +40,23 @@ public class Bill {
     this.date = date;
   }
 
-  public void setTotal(float total) {
-    this.total = total;
-  }
-
   public void setCustomerId(Long customerId) {
     this.customerId = customerId;
   }
+  
+  public void addLine(Line line) {
+    this.lines.add(line);
+  }
+  
+
+  public ArrayList<Line> getLines() {
+    return lines;
+  }
+
 
   @Override
   public String toString() {
-    return "Bill [id=" + id + ", date=" + date + ", total=" + total + ", customerId=" + customerId
+    return "Bill [id=" + id + ", date=" + date + ", customerId=" + customerId
         + "]";
   }
   

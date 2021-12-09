@@ -10,11 +10,17 @@ public class Line {
   private int quantity;
   private float subtotal;
   private Long billId;
-
-  public Line(int quantity, float subtotal, Long billId) {
+  private Bouquet bouquet;
+  
+  public Line(int quantity, float subtotal) {
     this.quantity = quantity;
     this.subtotal = subtotal;
-    this.billId = billId;
+  }
+
+  public Line(int quantity, float subtotal, Bouquet bouquet) {
+    this.quantity = quantity;
+    this.subtotal = subtotal;
+    this.bouquet = bouquet;
   }
 
   public Long getId() {
@@ -31,6 +37,11 @@ public class Line {
 
   public Long getBillId() {
     return billId;
+  }
+
+
+  public Bouquet getBouquet() {
+    return bouquet;
   }
 
   public void setId(Long id) {

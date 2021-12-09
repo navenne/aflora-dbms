@@ -1,5 +1,7 @@
 package flowershop;
 
+import java.util.Objects;
+
 /**
  * @author Laura Hidalgo Rivera
  */
@@ -63,5 +65,24 @@ public class Flower {
     return "Flower [id=" + id + ", species=" + species + ", color=" + color + ", price=" + price
         + ", stock=" + stock + "]";
   }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    Flower other = (Flower) obj;
+    return Objects.equals(id, other.id);
+  }
+  
+  
   
 }

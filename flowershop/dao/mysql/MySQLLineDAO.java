@@ -81,7 +81,7 @@ public class MySQLLineDAO implements LineDAO {
         ResultSet rs = pst.executeQuery();) {
         
         while(rs.next()) {
-          Line line = new Line(rs.getInt("quantity"), rs.getFloat("subtotal"), rs.getLong("billId"));
+          Line line = new Line(rs.getInt("quantity"), rs.getFloat("subtotal"));
           line.setId(rs.getLong("id"));
           lines.add(line);
       }
@@ -102,7 +102,7 @@ public class MySQLLineDAO implements LineDAO {
         pst.setLong(1, id);
         
         if (rs.next()) {
-          line = new Line(rs.getInt("quantity"), rs.getFloat("subtotal"), rs.getLong("billId"));
+          line = new Line(rs.getInt("quantity"), rs.getFloat("subtotal"));
           line.setId(rs.getLong("id"));
         } else {
           throw new DAOException("No line found with id " + id);

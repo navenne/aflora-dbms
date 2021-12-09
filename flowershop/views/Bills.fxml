@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<GridPane hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="flowershop.controllers.Bills">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="503.0" minWidth="10.0" prefWidth="347.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="446.0" minWidth="10.0" prefWidth="443.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="350.0" minHeight="10.0" prefHeight="295.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="259.0" minHeight="10.0" prefHeight="255.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <Button fx:id="homeButton" mnemonicParsing="false" onAction="#backToHome">
+         <graphic>
+            <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/home.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+      </Button>
+      <HBox alignment="CENTER" spacing="5.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+         <children>
+            <Label text="BILLS" />
+         </children>
+      </HBox>
+      <VBox prefHeight="520.0" prefWidth="350.0" GridPane.rowIndex="1" GridPane.rowSpan="2">
+         <GridPane.margin>
+            <Insets bottom="30.0" left="10.0" />
+         </GridPane.margin>
+         <children>
+            <Label text="CUSTOMER" />
+            <TextField fx:id="customerInput" maxWidth="-Infinity" prefWidth="200.0" />
+            <Label text="BOUQUETS" />
+            <TableView fx:id="table1" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="500.0" prefWidth="332.0">
+               <columns>
+                  <TableColumn fx:id="bouquetCol" prefWidth="136.0" text="BOUQUET" />
+                  <TableColumn fx:id="priceCol1" prefWidth="58.0" text="PRICE" />
+                  <TableColumn fx:id="quantityCol1" prefWidth="67.0" text="QUANTITY" />
+                  <TableColumn fx:id="subtotalCol1" prefWidth="70.0" text="SUBTOTAL" />
+               </columns>
+            </TableView>
+            <HBox alignment="TOP_CENTER">
+               <children>
+                  <Label text="TOTAL" />
+                  <TextField fx:id="totalInput" />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox prefWidth="415.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <children>
+            <HBox spacing="5.0">
+               <children>
+                  <Button fx:id="bouquetButton" mnemonicParsing="false" onAction="#onBouquetButton" text="Add Bouquet" />
+                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#onSaveButton" text="Save" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </HBox>
+            <TableView fx:id="table2" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#onTable2ItemSelected" prefHeight="500.0" prefWidth="434.0">
+               <columns>
+                  <TableColumn fx:id="idCol" prefWidth="60.0" text="ID" />
+                  <TableColumn fx:id="speciesCol" prefWidth="121.0" text="SPECIES" />
+                  <TableColumn fx:id="colorCol" prefWidth="93.0" text="COLOR" />
+                  <TableColumn fx:id="priceCol2" prefWidth="81.0" text="PRICE" />
+                  <TableColumn fx:id="stockCol" prefWidth="78.0" text="STOCK" />
+               </columns>
+            </TableView>
+         </children>
+      </VBox>
+      <TableView fx:id="table3" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#onTable3ItemSelected" prefHeight="240.0" prefWidth="332.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <columns>
+            <TableColumn fx:id="flowerCol" prefWidth="136.0" text="FLOWER" />
+            <TableColumn fx:id="priceCol3" prefWidth="58.0" text="PRICE" />
+            <TableColumn fx:id="quantityCol3" prefWidth="67.0" text="QUANTITY" />
+            <TableColumn fx:id="subtotalCol3" prefWidth="70.0" text="SUBTOTAL" />
+         </columns>
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
+      </TableView>
+   </children>
+</GridPane>

@@ -79,6 +79,8 @@ public class Customers implements Initializable {
   private ObservableList<Customer> obList = FXCollections.observableArrayList();
 
   private DAOManager manager;
+  
+  private Utils utils = new Utils();
 
   private Alert a = new Alert(null);
 
@@ -100,8 +102,34 @@ public class Customers implements Initializable {
   }
   
   @FXML
-  void onBillButton(ActionEvent event) {
-    
+  void onBillButton(ActionEvent event) throws IOException {
+    if (idInput.getText() == "") {
+      Utils.alert(a, AlertType.INFORMATION, "No customer selected", "Please select a customer to create a bill.");
+    } else {
+      Customer customer = table.getSelectionModel().getSelectedItem();
+      FXMLLoader loader = new FXMLLoader(
+          this.getClass().getResource(
+            "/flowershop/views/Bills.fxml"
+          )
+        );
+      
+      Parent root = (Parent) loader.load();
+      
+      Bills controller = loader.getController();
+      controller.initData(customer);
+      
+      Scene scene = new Scene(root);
+      Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+      stage.setTitle("Flower Shop - Bills");
+      stage.setScene(scene);
+      stage.show();
+
+      stage.setResizable(false);
+      
+        
+       
+    }
   }
 
   @FXML
@@ -114,11 +142,11 @@ public class Customers implements Initializable {
       showTable();
 
     } catch (NumberFormatException e) {
-      alert(AlertType.ERROR, "Invalid value", "Please enter a number.");
+      Utils.alert(a, AlertType.ERROR, "Invalid value", "Please enter a number.");
     } catch (DAOException e) {
-      alert(AlertType.ERROR, "Delete error", "Could not delete customer from database.");
+      Utils.alert(a, AlertType.ERROR, "Delete error", "Could not delete customer from database.");
     } catch (SQLException e) {
-      alert(AlertType.ERROR, "Connection failed", "Could not stablish connection with database.");
+      Utils.alert(a, AlertType.ERROR, "Connection failed", "Could not stablish connection with database.");
     }
   }
 
@@ -140,11 +168,11 @@ public class Customers implements Initializable {
       showTable();
 
     } catch (NumberFormatException e) {
-      alert(AlertType.ERROR, "Invalid value", "Please enter a number.");
+      Utils.alert(a, AlertType.ERROR, "Invalid value", "Please enter a number.");
     } catch (DAOException e) {
-      alert(AlertType.ERROR, "Error", "Could not save nor modify customer.");
+      Utils.alert(a, AlertType.ERROR, "Error", "Could not save nor modify customer.");
     } catch (SQLException e) {
-      alert(AlertType.ERROR, "Connection failed", "Could not stablish connection with database.");
+      Utils.alert(a, AlertType.ERROR, "Connection failed", "Could not stablish connection with database.");
     }
   }
 
@@ -163,11 +191,11 @@ public class Customers implements Initializable {
       table.setItems(obList);
 
     } catch (NumberFormatException e) {
-      alert(AlertType.ERROR, "Invalid value", "Please enter a number.");
+      Utils.alert(a, AlertType.ERROR, "Invalid value", "Please enter a number.");
     } catch (DAOException e) {
-      alert(AlertType.ERROR, "Search error", "Could not find customer.");
+      Utils.alert(a, AlertType.ERROR, "Search error", "Could not find customer.");
     } catch (SQLException e) {
-      alert(AlertType.ERROR, "Connection failed", "Could not stablish connection with database.");
+      Utils.alert(a, AlertType.ERROR, "Connection failed", "Could not stablish connection with database.");
     }
   }
 
@@ -180,17 +208,7 @@ public class Customers implements Initializable {
 
   @FXML
   void backToHome(ActionEvent event) throws IOException {
-    Parent root = FXMLLoader.load(this.getClass().getResource("/flowershop/views/Menu.fxml"));
-
-    Scene scene = new Scene(root);
-
-    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-    stage.setTitle("Flower Shop");
-    stage.setScene(scene);
-    stage.show();
-
-    stage.setResizable(false);
+    utils.switchScene("Menu", event);
   }
 
   private void showTable() {
@@ -200,9 +218,9 @@ public class Customers implements Initializable {
         obList.add(customer);
       }
     } catch (DAOException e) {
-      alert(AlertType.ERROR, "Search error", "Could not find any customers.");
+      Utils.alert(a, AlertType.ERROR, "Search error", "Could not find any customers.");
     } catch (SQLException e) {
-      alert(AlertType.ERROR, "Connection failed", "Could not stablish connection with database.");
+      Utils.alert(a, AlertType.ERROR, "Connection failed", "Could not stablish connection with database.");
     }
 
     idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -210,13 +228,6 @@ public class Customers implements Initializable {
     phoneNumberCol.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
 
     table.setItems(obList);
-  }
-
-  private void alert(AlertType alertType, String headerText, String contentText) {
-    a.setAlertType(alertType);
-    a.setHeaderText(headerText);
-    a.setContentText(contentText);
-    a.show();
   }
 
   private void clear() {

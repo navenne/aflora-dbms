@@ -18,11 +18,7 @@ public class MySQLBouquetDAO implements BouquetDAO {
   private String INSERT_FLOWER_BOUQUET =
       "INSERT INTO flowerBouquet (bouquetId, flowerId, quantity) VALUES (?,?,?)";
   private String UPDATE = "UPDATE bouquet SET lineId = ? WHERE id = ?";
-  private String UPDATE_FLOWER_BOUQUET =
-      "UPDATE flowerBouquet SET quantity = ? WHERE bouquetId = ? AND flowerId = ?";
   private String DELETE = "DELETE FROM bouquet WHERE id = ?";
-  private String DELETE_FLOWER_BOUQUET =
-      "DELETE FROM flowerBouquet WHERE bouquetId = ? AND flowerId = ?";
   private String GETALL = "SELECT * FROM bouquet";
   private String GET = "SELECT * FROM bouquet WHERE id = ?";
 
@@ -58,8 +54,6 @@ public class MySQLBouquetDAO implements BouquetDAO {
         }
 
       }
-
-
 
     } catch (SQLException e) {
       throw new DAOException("SQL Error", e);

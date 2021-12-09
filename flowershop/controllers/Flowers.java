@@ -12,11 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -25,7 +21,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 
 /**
  * @author Laura Hidalgo Rivera
@@ -89,6 +84,8 @@ public class Flowers implements Initializable {
 
   private DAOManager manager;
 
+  private Utils utils = new Utils();
+  
   private Alert a = new Alert(null);
 
   @Override
@@ -120,11 +117,11 @@ public class Flowers implements Initializable {
       showTable();
 
     } catch (NumberFormatException e) {
-      alert(AlertType.ERROR, "Invalid value", "Please enter a number.");
+      Utils.alert(a, AlertType.ERROR, "Invalid value", "Please enter a number.");
     } catch (DAOException e) {
-      alert(AlertType.ERROR, "Delete error", "Could not delete flower from database.");
+      Utils.alert(a, AlertType.ERROR, "Delete error", "Could not delete flower from database.");
     } catch (SQLException e) {
-      alert(AlertType.ERROR, "Connection failed", "Could not stablish connection with database.");
+      Utils.alert(a, AlertType.ERROR, "Connection failed", "Could not stablish connection with database.");
     }
   }
 
@@ -148,11 +145,11 @@ public class Flowers implements Initializable {
       showTable();
 
     } catch (NumberFormatException e) {
-      alert(AlertType.ERROR, "Invalid value", "Please enter a number.");
+      Utils.alert(a, AlertType.ERROR, "Invalid value", "Please enter a number.");
     } catch (DAOException e) {
-      alert(AlertType.ERROR, "Error", "Could not save nor modify flower.");
+      Utils.alert(a, AlertType.ERROR, "Error", "Could not save nor modify flower.");
     } catch (SQLException e) {
-      alert(AlertType.ERROR, "Connection failed", "Could not stablish connection with database.");
+      Utils.alert(a, AlertType.ERROR, "Connection failed", "Could not stablish connection with database.");
     }
   }
 
@@ -173,11 +170,11 @@ public class Flowers implements Initializable {
       table.setItems(obList);
 
     } catch (NumberFormatException e) {
-      alert(AlertType.ERROR, "Invalid value", "Please enter a number.");
+      Utils.alert(a, AlertType.ERROR, "Invalid value", "Please enter a number.");
     } catch (DAOException e) {
-      alert(AlertType.ERROR, "Search error", "Could not find flower.");
+      Utils.alert(a, AlertType.ERROR, "Search error", "Could not find flower.");
     } catch (SQLException e) {
-      alert(AlertType.ERROR, "Connection failed", "Could not stablish connection with database.");
+      Utils.alert(a, AlertType.ERROR, "Connection failed", "Could not stablish connection with database.");
     }
   }
 
@@ -190,17 +187,7 @@ public class Flowers implements Initializable {
 
   @FXML
   void backToHome(ActionEvent event) throws IOException {
-    Parent root = FXMLLoader.load(this.getClass().getResource("/flowershop/views/Menu.fxml"));
-
-    Scene scene = new Scene(root);
-
-    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-    stage.setTitle("Flower Shop");
-    stage.setScene(scene);
-    stage.show();
-
-    stage.setResizable(false);
+    utils.switchScene("Menu", event);
   }
 
   private void showTable() {
@@ -210,9 +197,9 @@ public class Flowers implements Initializable {
         obList.add(flower);
       }
     } catch (DAOException e) {
-      alert(AlertType.ERROR, "Search error", "Could not find any flowers.");
+      Utils.alert(a, AlertType.ERROR, "Search error", "Could not find any flowers.");
     } catch (SQLException e) {
-      alert(AlertType.ERROR, "Connection failed", "Could not stablish connection with database.");
+      Utils.alert(a, AlertType.ERROR, "Connection failed", "Could not stablish connection with database.");
     }
 
     idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -222,13 +209,6 @@ public class Flowers implements Initializable {
     stockCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
 
     table.setItems(obList);
-  }
-
-  private void alert(AlertType alertType, String headerText, String contentText) {
-    a.setAlertType(alertType);
-    a.setHeaderText(headerText);
-    a.setContentText(contentText);
-    a.show();
   }
 
   private void clear() {

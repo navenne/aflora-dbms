@@ -25,7 +25,6 @@ public class Utils {
 
   void switchScene(String fxml, ActionEvent event) throws IOException {
     Parent root = FXMLLoader.load(this.getClass().getResource("/flowershop/views/" + fxml + ".fxml"));
- 
     Scene scene = new Scene(root);
 
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -37,7 +36,7 @@ public class Utils {
     stage.setResizable(false);
   }
 
-  static void alert(Alert a, AlertType alertType, String headerText, String contentText) {
+  public static void alert(Alert a, AlertType alertType, String headerText, String contentText) {
     a.setAlertType(alertType);
     a.setHeaderText(headerText);
     a.setContentText(contentText);
@@ -49,6 +48,7 @@ public class Utils {
             PreparedStatement pst = conn.prepareStatement("DROP DATABASE IF EXISTS flowershop");) {
           pst.executeUpdate();
         } catch (SQLException e){
+          System.err.println("Could not drop database.");
         }
         try {
           createDB();

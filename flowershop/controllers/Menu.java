@@ -17,7 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 
-public class Menu implements Initializable {
+public class Menu {
 
     @FXML
     private Button billsButton;
@@ -37,11 +37,6 @@ public class Menu implements Initializable {
     private Utils utils = new Utils();
 
     private Alert a = new Alert(null);
-    
-    @Override
-    public void initialize(URL arg0, ResourceBundle arg1) {
-      Utils.alert(a, AlertType.CONFIRMATION, "Database info", "Create clean database?");
-    }
     
     @FXML
     void viewCustomers(ActionEvent event) {

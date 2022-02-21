@@ -112,8 +112,8 @@ CREATE TABLE `flower` (
 --
 
 INSERT INTO `flower` (`id`, `species`, `color`, `price`, `stock`) VALUES
-(1, 'rosa', 'roja', 2.5, 10),
-(2, 'clavel', 'blanco', 3.1, 7);
+(1, 'rose', 'red', 2.5, 10),
+(2, 'lily', 'white', 3.1, 7);
 
 -- --------------------------------------------------------
 
